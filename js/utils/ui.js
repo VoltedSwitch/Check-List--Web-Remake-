@@ -13,7 +13,6 @@ export function renderChecklist() {
     for (const item of userChecklist.items) {
       const li = document.createElement("li");
       li.innerHTML = item.toString();
-
       listView.appendChild(li);
     }
   }
@@ -25,9 +24,7 @@ function clearItemInput() {
 
 export function addItem() {
   const userItem = new Item(itemInput.value);
-  console.log("At function addItem before if check");
   if (Checklist.isValidItem(userItem)) {
-    console.log("At function addItem AFTER if check");
     userChecklist.addItem(userItem);
     clearItemInput();
     renderChecklist();
@@ -36,9 +33,7 @@ export function addItem() {
 
 export function removeItem() {
   const userValue = itemInput.value;
-  console.log("At function removeItem before if check");
   if (userChecklist.isValidItemNumber(userValue)) {
-    console.log("At function removeItem AFTER if check");
     userChecklist.removeItem(userValue);
     clearItemInput();
     renderChecklist();
