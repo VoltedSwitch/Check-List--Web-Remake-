@@ -1,0 +1,29 @@
+body {
+  display: flex; /* Flexible layout box */
+  justify-content: center; /* Horizontal alignment */
+  align-items: center; /* Vertical alignment */
+  flex-direction: column; /* Makes items stack top-to-bottom instead of left-to-right (default is row). */
+}
+#add-btn {
+  margin-top: 30px;
+  background-color: lightblue;
+}
+#remove-btn {
+  background-color: tomato;
+}
+button {
+  margin: -5px;
+  height: 30px;
+  width: 80px;
+}
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 5px 0 #2980b9;
+}
+.fade {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+.fade.hide {
+  opacity: 0;
+}

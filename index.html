@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checklist</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <ol id="list-view"></ol>
+    <div class="entry">
+      <label for="item-input">Item:</label>
+      <input
+        type="text"
+        id="item-input"
+        placeholder="Enter an item or item #"
+      />
+    </div>
+    <button id="add-btn">Add</button>
+    <p id="add-btn-error-msg" class="fade"></p>
+    <button id="remove-btn">Remove</button>
+    <p id="remove-btn-error-msg" class="fade"></p>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
