@@ -12,9 +12,10 @@ body {
   background-color: tomato;
 }
 button {
-  margin: -5px;
+  margin: -8px;
   height: 30px;
   width: 80px;
+  border-radius: 8px;
 }
 button:active {
   transform: scale(0.95);
