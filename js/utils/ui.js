@@ -5,6 +5,8 @@ const userChecklist = new Checklist();
 const listView = document.getElementById("list-view");
 const itemInput = document.getElementById("item-input");
 
+userChecklist.loadItems();
+
 export function renderChecklist() {
   if (userChecklist.isEmpty()) {
     listView.innerHTML = "Checklist currently empty";
@@ -26,6 +28,7 @@ export function addItem() {
   const userItem = new Item(itemInput.value);
   if (Checklist.isValidItem(userItem)) {
     userChecklist.addItem(userItem);
+    userChecklist.saveItems();
     clearItemInput();
     renderChecklist();
   }
@@ -35,6 +38,7 @@ export function removeItem() {
   const userValue = itemInput.value;
   if (userChecklist.isValidItemNumber(userValue)) {
     userChecklist.removeItem(userValue);
+    userChecklist.saveItems();
     clearItemInput();
     renderChecklist();
   }

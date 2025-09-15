@@ -1,4 +1,5 @@
 import { Item } from "./item.js";
+import { DataHandler } from "../utils/dataHandler.js";
 
 export class Checklist {
   constructor() {
@@ -31,5 +32,13 @@ export class Checklist {
   }
   isitemNumberWithinValiditemNumbers(itemNumber) {
     return itemNumber >= 1 && itemNumber <= this.items.length;
+  }
+
+  loadItems() {
+    this.items = DataHandler.loadData();
+  }
+
+  saveItems() {
+    DataHandler.saveData(this.items);
   }
 }
