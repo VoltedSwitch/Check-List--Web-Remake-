@@ -16,6 +16,11 @@ export class Checklist {
     const [removedItem] = this.items.splice(itemIndex, 1);
     if (giveRemovedItem) return removedItem;
   }
+  toggleItem(itemNumber) {
+    const itemIndex = Number(itemNumber) - 1;
+    const item = this.items[itemIndex];
+    item.checked ? item.uncheck() : item.check();
+  }
   isEmpty() {
     return this.items.length === 0;
   }

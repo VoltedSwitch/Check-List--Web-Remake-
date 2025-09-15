@@ -43,3 +43,13 @@ export function removeItem() {
     renderChecklist();
   }
 }
+
+export function toggleItem() {
+  const userValue = itemInput.value;
+  if (userChecklist.isValidItemNumber(userValue)) {
+    userChecklist.toggleItem(userValue);
+    userChecklist.saveItems();
+    clearItemInput();
+    renderChecklist();
+  }
+}

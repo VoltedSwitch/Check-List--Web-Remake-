@@ -11,6 +11,9 @@ body {
 #remove-btn {
   background-color: tomato;
 }
+#toggle-btn {
+  background-color: yellow;
+}
 button {
   margin: -8px;
   height: 30px;
