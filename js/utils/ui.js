@@ -12,16 +12,32 @@ export function renderChecklist() {
     listView.innerHTML = "Checklist currently empty";
   } else {
     listView.innerHTML = "";
-    for (const item of userChecklist.items) {
+
+    for (const [index, item] of userChecklist.items.entries()) {
+      const itemNumber = index + 1;
+      const itemTextButton = document.createElement("button");
+      itemTextButton.innerHTML = item.toString();
+      itemTextButton.addEventListener("click", () => {
+        userChecklist.toggleItem(itemNumber);
+        userChecklist.saveItems();
+        renderChecklist();
+      });
+
+      const itemDeleteButton = document.createElement("button");
+      itemDeleteButton.innerHTML = "⛌";
+      itemDeleteButton.addEventListener("click", () => {
+        userChecklist.removeItem(itemNumber);
+        userChecklist.saveItems();
+        renderChecklist();
+      });
+
       const li = document.createElement("li");
-      li.innerHTML = item.toString();
+      li.appendChild(itemTextButton);
+      li.appendChild(itemDeleteButton);
+
       listView.appendChild(li);
     }
   }
-}
-
-function clearItemInput() {
-  itemInput.value = "";
 }
 
 export function addItem() {
@@ -29,27 +45,7 @@ export function addItem() {
   if (Checklist.isValidItem(userItem)) {
     userChecklist.addItem(userItem);
     userChecklist.saveItems();
-    clearItemInput();
-    renderChecklist();
-  }
-}
-
-export function removeItem() {
-  const userValue = itemInput.value;
-  if (userChecklist.isValidItemNumber(userValue)) {
-    userChecklist.removeItem(userValue);
-    userChecklist.saveItems();
-    clearItemInput();
-    renderChecklist();
-  }
-}
-
-export function toggleItem() {
-  const userValue = itemInput.value;
-  if (userChecklist.isValidItemNumber(userValue)) {
-    userChecklist.toggleItem(userValue);
-    userChecklist.saveItems();
-    clearItemInput();
+    itemInput.value = "";
     renderChecklist();
   }
 }
