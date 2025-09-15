@@ -17,8 +17,8 @@ button {
   width: 80px;
 }
 button:active {
-  transform: translateY(3px);
-  box-shadow: 0 5px 0 #2980b9;
+  transform: scale(0.95);
+  box-shadow: 2px 5px 0 #2980b9;
 }
 .fade {
   transition: opacity 0.5s;
