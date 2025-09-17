@@ -3,7 +3,7 @@ import { DataHandler } from "../utils/dataHandler.js";
 
 export class Checklist {
   constructor() {
-    this.items = [];
+    this.items = DataHandler.loadData();
   }
   getItem(itemNumber) {
     return this.items[itemNumber - 1];
@@ -39,11 +39,7 @@ export class Checklist {
     return itemNumber >= 1 && itemNumber <= this.items.length;
   }
 
-  loadItems() {
-    this.items = DataHandler.loadData();
-  }
-
-  saveItems() {
+  saveState() {
     DataHandler.saveData(this.items);
   }
 }

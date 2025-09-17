@@ -5,8 +5,6 @@ const userChecklist = new Checklist();
 const listView = document.getElementById("list-view");
 const itemInput = document.getElementById("item-input");
 
-userChecklist.loadItems();
-
 export function renderChecklist() {
   if (userChecklist.isEmpty()) {
     listView.innerHTML = "Checklist currently empty";
@@ -15,25 +13,25 @@ export function renderChecklist() {
 
     for (const [index, item] of userChecklist.items.entries()) {
       const itemNumber = index + 1;
-      const itemTextButton = document.createElement("button");
-      itemTextButton.innerHTML = item.toString();
-      itemTextButton.addEventListener("click", () => {
+      const itemText = document.createElement("button");
+      itemText.innerHTML = item.toString();
+      itemText.addEventListener("click", () => {
         userChecklist.toggleItem(itemNumber);
-        userChecklist.saveItems();
+        userChecklist.saveState();
         renderChecklist();
       });
 
-      const itemDeleteButton = document.createElement("button");
-      itemDeleteButton.innerHTML = "⛌";
-      itemDeleteButton.addEventListener("click", () => {
+      const itemDeleteOption = document.createElement("button");
+      itemDeleteOption.innerHTML = "⛌";
+      itemDeleteOption.addEventListener("click", () => {
         userChecklist.removeItem(itemNumber);
-        userChecklist.saveItems();
+        userChecklist.saveState();
         renderChecklist();
       });
 
       const li = document.createElement("li");
-      li.appendChild(itemTextButton);
-      li.appendChild(itemDeleteButton);
+      li.appendChild(itemText);
+      li.appendChild(itemDeleteOption);
 
       listView.appendChild(li);
     }
@@ -44,7 +42,7 @@ export function addItem() {
   const userItem = new Item(itemInput.value);
   if (Checklist.isValidItem(userItem)) {
     userChecklist.addItem(userItem);
-    userChecklist.saveItems();
+    userChecklist.saveState();
     itemInput.value = "";
     renderChecklist();
   }
