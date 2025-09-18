@@ -1,10 +1,4 @@
-import { renderChecklist, addItem } from "./utils/ui.js";
+import { Checklist } from "./core/checklist.js";
 
-const itemInput = document.getElementById("item-input");
-
-renderChecklist();
-itemInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    addItem();
-  }
-});
+const userChecklist = new Checklist();
+userChecklist.render();

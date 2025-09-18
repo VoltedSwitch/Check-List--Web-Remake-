@@ -10,23 +10,27 @@ export class DataHandler {
       const rawItems = JSON.parse(data);
       return rawItems.map((obj) => {
         const item = new Item(obj.text);
-        if (obj.checked) item.check();
+        item.checked = obj.checked;
         return item;
       });
     } catch (e) {
-      console.error("Failed to parse JSON:", e);
+      console.log("Failed to parse JSON:", e);
       return [];
     }
   }
 
-  static saveData(data) {
+  static saveData(items) {
     try {
+      const dataToSave = items.map((item) => ({
+        text: item.text,
+        checked: item.checked,
+      }));
       localStorage.setItem(
         DataHandler.accessKey,
-        JSON.stringify(data, null, 4)
+        JSON.stringify(dataToSave, null, 4)
       );
     } catch (e) {
-      console.error("Failed to save JSON:", e);
+      console.log("Failed to save JSON:", e);
     }
   }
 }
