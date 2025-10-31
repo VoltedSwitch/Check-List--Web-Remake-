@@ -4,6 +4,7 @@ export class Item {
     this.checklist = checklist;
     this.checked = false;
     this.widget = document.createElement("button");
+    this.widget.classList.add("widget");
     this.widget.addEventListener("click", () => {
       this.toggle();
       if (this.checklist) {

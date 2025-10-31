@@ -7,8 +7,9 @@ export class Checklist {
     for (const item of this.items) {
       item.checklist = this;
     }
-    this.listView = document.getElementById("list-view");
-    this.itemInput = document.getElementById("item-input");
+    this.neededSwappablesAmount = 2;
+    this.listView = document.querySelector("#list-view");
+    this.itemInput = document.querySelector("#item-input");
     this.itemInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         const newItem = new Item(this.itemInput.value);
@@ -29,15 +30,44 @@ export class Checklist {
         item.render();
 
         const itemDeleteOption = document.createElement("button");
+        itemDeleteOption.classList.add("delete-option");
         itemDeleteOption.innerHTML = "⛌";
         itemDeleteOption.addEventListener("click", () => {
           this.removeItem(itemNumber);
           this.render();
         });
 
+        const itemSwapOption = document.createElement("button");
+        itemSwapOption.classList.add("swap-option");
+        itemSwapOption.innerHTML = "swap";
+        itemSwapOption.addEventListener("click", () => {
+          // Make this button orange
+          itemSwapOption.classList.add("swappable");
+
+          // Check AFTER making it orange
+          if (this.twoItemsUpForSwap()) {
+            // Wait a bit so the orange color appears before swapping
+            setTimeout(() => {
+              const items = this.getSwappableItems();
+              const [firstItem, secondItem] = items;
+
+              const firstWidget = firstItem.querySelector(".widget");
+              const secondWidget = secondItem.querySelector(".widget");
+
+              // Swap their text
+              const firstPreviousText = firstWidget.innerHTML;
+              firstWidget.innerHTML = secondWidget.innerHTML;
+              secondWidget.innerHTML = firstPreviousText;
+
+              this.unsetColorSwappedItems();
+            }, 1000); // 👈 200 milliseconds delay
+          }
+        });
+
         const li = document.createElement("li");
         li.appendChild(item.widget);
         li.appendChild(itemDeleteOption);
+        li.appendChild(itemSwapOption);
 
         this.listView.appendChild(li);
       }
@@ -69,7 +99,7 @@ export class Checklist {
   }
   isValidItemNumber(itemNumber) {
     const result = Number(itemNumber);
-    return !isNaN(result) && Number.isInteger(result);
+    return !Number.isNaN(result) && Number.isInteger(result);
   }
   isitemNumberWithinValiditemNumbers(itemNumber) {
     return (
@@ -77,6 +107,34 @@ export class Checklist {
       itemNumber >= 1 &&
       itemNumber <= this.items.length
     );
+  }
+  twoItemsUpForSwap() {
+    const items = this.getSwappableItems();
+    return items.length === this.neededSwappablesAmount;
+  }
+  unsetColorSwappedItems() {
+    const items = this.getSwappableItems();
+    if (items.length < this.neededSwappablesAmount) return;
+    const [firstItem, secondItem] = items;
+    const firstSwapButton = firstItem.querySelector(".swap-option");
+    const secondSwapButton = secondItem.querySelector(".swap-option");
+    firstSwapButton.classList.remove("swappable");
+    secondSwapButton.classList.remove("swappable");
+  }
+  getSwappableItems() {
+    const swappableItems = [];
+    const items = this.getItems();
+    for (const item of items) {
+      const swapButton = item.querySelector(".swap-option");
+      if (swapButton.classList.contains("swappable")) {
+        swappableItems.push(item);
+      }
+    }
+    return swappableItems;
+  }
+  getItems() {
+    const listItems = this.listView.querySelectorAll("li");
+    return listItems;
   }
   static isValidItem(item) {
     return item instanceof Item && !item.isEmpty();

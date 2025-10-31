@@ -25,3 +25,9 @@ body {
 #list-view li button:active {
   filter: brightness(80%);
 }
+
+#list-view li button.swappable {
+  background-color: rgb(255, 94, 7) !important;
+  color: white;
+  transition: background-color 0.3s;
+}
