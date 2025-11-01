@@ -49,15 +49,23 @@ export class Checklist {
             // Wait a bit so the orange color appears before swapping
             setTimeout(() => {
               const items = this.getSwappableItems();
-              const [firstItem, secondItem] = items;
+              const [first, second] = items;
 
-              const firstWidget = firstItem.querySelector(".widget");
-              const secondWidget = secondItem.querySelector(".widget");
+              const firstWidget = first.querySelector(".widget");
+              const secondWidget = second.querySelector(".widget");
 
-              // Swap their text
-              const firstPreviousText = firstWidget.innerHTML;
+              const firstItem = this.getItemByWidget(firstWidget);
+              const secondItem = this.getItemByWidget(secondWidget);
+
+              // Swap their DOM Text
+              const firstWidgetPreviousText = firstWidget.innerHTML;
               firstWidget.innerHTML = secondWidget.innerHTML;
-              secondWidget.innerHTML = firstPreviousText;
+              secondWidget.innerHTML = firstWidgetPreviousText;
+
+              // Swap this.items State Text
+              const firstItemPreviousText = firstItem.text;
+              firstItem.text = secondItem.text;
+              secondItem.text = firstItemPreviousText;
 
               this.unsetColorSwappedItems();
             }, 1000); // 👈 200 milliseconds delay
@@ -78,6 +86,9 @@ export class Checklist {
       const itemIndex = itemNumber - 1;
       return this.items[itemIndex];
     }
+  }
+  getItemByWidget(widget) {
+    return this.items.find((item) => item.widget === widget);
   }
   addItem(item) {
     if (Checklist.isValidItem(item)) {
@@ -115,9 +126,9 @@ export class Checklist {
   unsetColorSwappedItems() {
     const items = this.getSwappableItems();
     if (items.length < this.neededSwappablesAmount) return;
-    const [firstItem, secondItem] = items;
-    const firstSwapButton = firstItem.querySelector(".swap-option");
-    const secondSwapButton = secondItem.querySelector(".swap-option");
+    const [first, second] = items;
+    const firstSwapButton = first.querySelector(".swap-option");
+    const secondSwapButton = second.querySelector(".swap-option");
     firstSwapButton.classList.remove("swappable");
     secondSwapButton.classList.remove("swappable");
   }
