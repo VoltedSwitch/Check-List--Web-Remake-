@@ -24,7 +24,7 @@ The app is built with **vanilla JavaScript, HTML, and CSS** and demonstrates mod
 
 ## How to Open
 
-1. Simply open `index.html` in your browser.
+1. Simply open the link to the website.
 2. No additional setup or dependencies are required.
 
 ---
